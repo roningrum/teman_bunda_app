@@ -14,6 +14,17 @@ class _TemanBundaAppState extends State<TemanBundaApp> {
   late final WebViewController controller;
   var loadingPercentage = 0;
 
+  Future<bool> _onWillPop(BuildContext context) async {
+    bool canNavigate = await controller.canGoBack();
+    if (canNavigate) {
+      controller.goBack();
+      return false;
+    } else {
+      controller.canGoBack();
+      return true;
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -42,6 +53,7 @@ class _TemanBundaAppState extends State<TemanBundaApp> {
           }
           return NavigationDecision.navigate;
         },
+
       ))
       ..getScrollPosition()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
@@ -54,13 +66,16 @@ class _TemanBundaAppState extends State<TemanBundaApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Stack(
-          children: [
-            WebViewWidget(
-                controller: controller),
-            if (loadingPercentage < 100)
-              LinearProgressIndicator(color: pinkBold, value: loadingPercentage / 100.0)
-          ],
+        child: WillPopScope(
+          onWillPop: ()=>_onWillPop(context),
+          child: Stack(
+            children: [
+              WebViewWidget(
+                  controller: controller),
+              if (loadingPercentage < 100)
+                LinearProgressIndicator(color: pinkBold, value: loadingPercentage / 100.0)
+            ],
+          ),
         ),
       ),
     );
