@@ -1,12 +1,8 @@
 import 'dart:io';
 
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:teman_bunda_app/splash_screen.dart';
-import 'package:teman_bunda_app/teman_bunda_app.dart';
-import 'package:teman_bunda_app/term-condition.dart';
 import 'package:teman_bunda_app/theme/theme.dart';
 
 void main() {
